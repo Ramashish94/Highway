@@ -235,6 +235,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                 }
 
 
+//// sir es code ka yaha kya mayne h jab utils class m all ready rakha gya h
 
                 double MyLat = latLng.latitude;
                 double MyLong = latLng.longitude;
