@@ -62,4 +62,10 @@ public class SmsReceiver extends BroadcastReceiver
     {
         mListener = listener;
     }
+
+
+    public static void unBindListener(){
+        mListener=null;
+    }
+
 }

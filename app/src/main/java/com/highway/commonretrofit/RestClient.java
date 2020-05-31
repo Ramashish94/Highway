@@ -213,6 +213,11 @@ public class RestClient {
     public static void getInfo(BookingVehicleInfoRequest bookingVehicleInfoRequest, Callback<BookingVehicleInfoResponse> bookingVehicleInfoResponseCallback) {
         RetrofitClient.getClient().BOOKING_VEHICLE_INFO_RESPONSE_CALL(bookingVehicleInfoRequest).enqueue(bookingVehicleInfoResponseCallback);
     }
+    public static void onDriverOnLineOffline(BookingVehicleInfoRequest bookingVehicleInfoRequest, Callback<BookingVehicleInfoResponse> bookingVehicleInfoResponseCallback) {
+        RetrofitClient.getClient().getonDriverOnLineOffline(bookingVehicleInfoRequest).enqueue(bookingVehicleInfoResponseCallback);
+    }
+
+
 
     // accept/reject booking by driver
     public static void acceptRejectBookingTrip(BookingAcceptRejectData acceptRejectData, Callback<BookingAcceptRejectResponse> acceptRejectResponseCallback) {

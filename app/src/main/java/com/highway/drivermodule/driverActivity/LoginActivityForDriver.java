@@ -95,6 +95,7 @@ public class LoginActivityForDriver extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivityForDriver.this, MobileOtpVerificationActivity.class);
                                 HighwayPrefs.putString(LoginActivityForDriver.this, Constants.USERMOBILE, phone_number);
                                 HighwayPrefs.putString(getApplicationContext(), Constants.ROLEID, driverLoginRoleId);
+                                intent.putExtra("LoginRoleId", driverLoginRoleId);
                                 startActivity(intent);
                                 finish();
                                 Toast.makeText(LoginActivityForDriver.this, "Pls verify Otp ", Toast.LENGTH_SHORT).show();

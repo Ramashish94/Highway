@@ -98,6 +98,7 @@ public class LoginActivityForMiller extends AppCompatActivity {
 
                                 HighwayPrefs.putString(LoginActivityForMiller.this, Constants.USERMOBILE, phone_number);
                                 HighwayPrefs.putString(getApplicationContext(), Constants.ROLEID, millerLoginRoleId);
+                                intent.putExtra("LoginRoleId", millerLoginRoleId);
                                 startActivity(intent);
                                 finish();
                                 Toast.makeText(LoginActivityForMiller.this, "pls Verify Otp", Toast.LENGTH_SHORT).show();

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,10 +35,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.highway.R;
 import com.highway.common.base.HighwayApplication;
 import com.highway.common.base.activity.DashBoardActivity;
+import com.highway.commonretrofit.RestClient;
+import com.highway.customer.customerModelClass.vehicleInfo.BookingVehicleInfoRequest;
+import com.highway.customer.customerModelClass.vehicleInfo.BookingVehicleInfoResponse;
 import com.highway.utils.Constants;
 import com.highway.utils.HighwayPrefs;
 
-import static com.highway.utils.Constants.TRIP_ID;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DriverOnlineFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -254,6 +259,42 @@ public class DriverOnlineFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    public String userId;
+
+    public void onDriverOnLineOffline() {
+
+        userId = HighwayPrefs.getString(getActivity(), Constants.ID);
+        BookingVehicleInfoRequest bookingVehicleInfoRequest = new BookingVehicleInfoRequest();
+        bookingVehicleInfoRequest.setUserId(userId);
+        bookingVehicleInfoRequest.setVehicleTypeId(HighwayApplication.getInstance().getVehicleType());
+        bookingVehicleInfoRequest.setVehicleTypeId("");
+
+        RestClient.onDriverOnLineOffline(bookingVehicleInfoRequest, new Callback<BookingVehicleInfoResponse>() {
+            @Override
+            public void onResponse(Call<BookingVehicleInfoResponse> call, Response<BookingVehicleInfoResponse> response) {
+                if (response.body() != null) {
+                    /*if (response.body().getStatus()) {
+
+                        List<VehicleTypeInfo> vehicleTypeInfos = response.body().getVehicleTypeInfo();
+                        bookingVehicleInfoAdapter = new BookingVehicleInfoAdapter(vehicleTypeInfos, getApplicationContext());
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                        bookInfoRecycler.setLayoutManager(layoutManager);
+                        bookInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                        bookInfoRecycler.setAdapter(bookingVehicleInfoAdapter);
+                    }*/
+                } else {
+                    Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BookingVehicleInfoResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Failure booking Vehicle info", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
 
 }
 

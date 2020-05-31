@@ -1,11 +1,11 @@
 package com.highway.common.base.activity;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 
 import com.highway.R;
 import com.highway.common.base.commonModel.login.LoginReqUpdated;
@@ -23,13 +21,11 @@ import com.highway.common.base.commonModel.otpverify.VerifyOtpRequest;
 import com.highway.common.base.commonModel.otpverify.VerifyOtpResponse;
 import com.highway.commonretrofit.RestClient;
 import com.highway.customer.customerActivity.LoginActivityForCustomer;
-import com.highway.customer.customerFragment.NewBookingFragment;
 import com.highway.drivermodule.driverActivity.LoginActivityForDriver;
-import com.highway.drivermodule.driverFragment.DriverOnlineFragment;
-import com.highway.drivermodule.driverFragment.IncomingRequestFragmentForDriver;
 import com.highway.interfaces.SmsListener;
 import com.highway.millUserModule.milluserActivity.LoginActivityForMiller;
 import com.highway.ownerModule.vehicleOwnerActivities.LoginActivityForVehicleOwner;
+import com.highway.ownerModule.vehicleOwnerActivities.WelcomeOwnerActivity;
 import com.highway.reciever.SmsReceiver;
 import com.highway.utils.Constants;
 import com.highway.utils.HighwayPrefs;
@@ -54,7 +50,7 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
     public String otpNumber;
     public String usermobileNumber;
     public String userLoginRoleId;
-
+    String LoginRoleId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +61,8 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
         resend = findViewById(R.id.resend);
         mobileNumberTV = findViewById(R.id.mobileNumber);
         changeNumberTv = findViewById(R.id.changeNumber);
-
+        Bundle b = getIntent().getExtras();
+         LoginRoleId = b.getString("LoginRoleId");
 
         timerInOtp();                          // time count down of otp
 
@@ -86,40 +83,36 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
         changeNumberTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForCustomer.class);
-                startActivity(intent);
-                finish();*/
 
-                switch (userLoginRoleId) {
-                    case "1":                                     // Admin
+                String driverRoleId = HighwayPrefs.getString(getApplicationContext(), "driverRoleId");
 
-                        break;
+                Log.e("driver","::"+driverRoleId);
 
-                    case "2":                                    //  mill user
-                        Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForMiller.class);
-                        startActivity(intent);
-                        finish();
-                       break;
+                if (LoginRoleId.equalsIgnoreCase("2")) {
+                    Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForMiller.class);
+                    // bookVehicleName = HighwayPrefs.getString(getApplicationContext(), "bookVehicleName");
+                    startActivity(intent);
 
-                    case "3":                                              // Driver
-                        Intent intentD = new Intent(MobileOtpVerificationActivity.this, LoginActivityForDriver.class);
-                        startActivity(intentD);
-                        finish();
-                        break;
+                    finish();
+                } if (LoginRoleId.equalsIgnoreCase("3")) {
+                    Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForDriver.class);
+                    // bookVehicleName = HighwayPrefs.getString(getApplicationContext(), "bookVehicleName");
+                    startActivity(intent);
 
-                    case "4":                                   //  Customer
-                        Intent intentC = new Intent(MobileOtpVerificationActivity.this, LoginActivityForCustomer.class);
-                        startActivity(intentC);
-                        finish();
-                        break;
+                    finish();
+                } if (LoginRoleId.equalsIgnoreCase("4")) {
+                    Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForCustomer.class);
+                    // bookVehicleName = HighwayPrefs.getString(getApplicationContext(), "bookVehicleName");
+                    startActivity(intent);
 
-                    case "5":                              // Owner .. vehicle Owner
-                        Intent intentVO = new Intent(MobileOtpVerificationActivity.this, LoginActivityForVehicleOwner.class);
-                        startActivity(intentVO);
-                        finish();
-                        break;
+                    finish();
+                }else {
+
+                    Intent intent = new Intent(MobileOtpVerificationActivity.this, LoginActivityForVehicleOwner.class);
+                    // bookVehicleName = HighwayPrefs.getString(getApplicationContext(), "bookVehicleName");
+                    startActivity(intent);
+                    finish();
                 }
-
             }
         });
 
@@ -294,6 +287,12 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
     public void messageReceived(String messageText) {
         verifyPin.setText(messageText);
         verifyPinOperation();
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SmsReceiver.unBindListener();
 
     }
 }

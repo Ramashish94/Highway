@@ -383,6 +383,7 @@ public class RegistrationDetailsActivity extends AppCompatActivity {
                                     HighwayPrefs.putString(getApplicationContext(), Constants.User_statuss, response.body().getUser().getUserStatus());
                                     System.out.println("User Status signup" + response.body().getUser().getUserStatus());
                                     /* use our requirement  */
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                     HighwayPrefs.putString(getApplicationContext(), Constants.EMAIL, response.body().getUser().getEmail());
                                     HighwayPrefs.getString(getApplicationContext(), Constants.ID);
                                     startActivity(intent);

@@ -99,6 +99,7 @@ public class LoginActivityForCustomer extends AppCompatActivity {
                                 HighwayPrefs.putString(LoginActivityForCustomer.this, Constants.USERMOBILE, phone_number);
                                 //HighwayPrefs.putString(getApplicationContext(), Constants.ROLEID, customerLogInId);
                                 HighwayPrefs.putString(getApplicationContext(), Constants.ROLEID, customerLoginRoleId);
+                                intent.putExtra("LoginRoleId", customerLoginRoleId);
                                 startActivity(intent);
                                 finish();
                                 Toast.makeText(LoginActivityForCustomer.this, "Pls verify Otp  !", Toast.LENGTH_SHORT).show();

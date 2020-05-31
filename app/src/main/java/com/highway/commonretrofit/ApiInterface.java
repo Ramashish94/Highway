@@ -180,6 +180,11 @@ public interface ApiInterface {
     @POST("api/Booking/bookingInfoForCustomer")
     Call<BookingVehicleInfoResponse> BOOKING_VEHICLE_INFO_RESPONSE_CALL(@Body BookingVehicleInfoRequest bookingVehicleInfoRequest);
 
+
+    @POST("api/Booking/bookingInfoForCustomer")
+    Call<BookingVehicleInfoResponse> getonDriverOnLineOffline(@Body BookingVehicleInfoRequest bookingVehicleInfoRequest);
+
+
     // accept/reject booking trip by driver
     @POST("api/Booking/acceptBookTrip")
     Call<BookingAcceptRejectResponse> ACCEPT_REJECT_BOOKING_TRIP_RESPONSE_CALL(@Body BookingAcceptRejectData bookingAcceptReject);
