@@ -253,7 +253,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                     e.printStackTrace();
 
                 }
-
+//////////////////////////////////////////////////////////////////////////
 
 
 
