@@ -79,6 +79,8 @@
         <activity
             android:name=".customer.customerActivity.BookingInfoDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".customer.customerActivity.CustomerAllTripsActivityNew"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".customer.customerActivity.GoodTypeDetailsRecyclerItemActivity"
             android:screenOrientation="portrait" />
@@ -91,6 +93,9 @@
         <activity
             android:name=".customer.customerActivity.CancelOrderTripByCustomerWithReasonActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ownerModule.vehicleOwnerActivities.GetAllVehicleDetailsActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".common.base.bookingBottomSheet.BottomProgressBarActivity"
             android:screenOrientation="portrait" />
@@ -138,13 +143,15 @@
         <activity
             android:name=".drivermodule.driverActivity.WelcomeDriverActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ownerModule.vehicleOwnerActivities.OwnerMapActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ownerModule.vehicleOwnerActivities.WelcomeOwnerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".common.base.activity.DashBoardActivity"
             android:label=""
-            android:launchMode="singleInstance"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".common.base.activity.LoginOptionActivity"

@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.highway.R;
+import com.highway.common.base.activity.DashBoardActivity;
 import com.highway.commonretrofit.RestClient;
+import com.highway.ownerModule.ownerRequest.vehicleOnOff.VehicleOnOffReq;
+import com.highway.ownerModule.ownerrrModel.VehicleOnOffResp.VehicleOnOffResponse;
 import com.highway.ownerModule.vehicleOwnerAdapter.GetAllVehicleAdapterForVehicleOwner;
 import com.highway.ownerModule.vehileOwnerModelsClass.getAllVehicle.DataVehicle;
 import com.highway.ownerModule.vehileOwnerModelsClass.getAllVehicle.GetAllVehicleRequest;
@@ -37,7 +40,7 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
     Toolbar getAllVehicleToolbar;
     RecyclerView getAllVehicleRecyclerView;
 
-    List<VehicleDetail> vehicleDetails = new ArrayList<>();
+    ArrayList<VehicleDetail> vehicleDetails = new ArrayList<>();
     GetAllVehicleFragmentForVehicleOwner getAllVehicleFragmentForVehicleOwner;
     GetAllVehicleAdapterForVehicleOwner getAllVehicleAdapterForVehicleOwner;
     String userId;
@@ -66,11 +69,13 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_get_all_vehicle_fragment_for_vehicle_owner, container, false);
         getAllVehicleRecyclerView = view.findViewById(R.id.GetAllVehicleRecyclerView);
-
-
+        ((DashBoardActivity)getActivity()).setOnAllvehicalList();
         getAllVehicle();
+
         return view;
     }
+
+
 
 
     @Override
@@ -81,7 +86,7 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
 
     public void recyclerOperation() {
 
-        getAllVehicleAdapterForVehicleOwner = new GetAllVehicleAdapterForVehicleOwner(vehicleDetails, getContext());
+        getAllVehicleAdapterForVehicleOwner = new GetAllVehicleAdapterForVehicleOwner(vehicleDetails, getContext(),GetAllVehicleFragmentForVehicleOwner.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         getAllVehicleRecyclerView.setLayoutManager(layoutManager);
         getAllVehicleRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -145,4 +150,43 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
         super.onDetach();
     }
 
+
+    public void getonlineoffline(String UserId,String VehicleId,String VehicleOnOff){
+
+
+        VehicleOnOffReq vehicleOnOffReq = new VehicleOnOffReq();
+            userId = HighwayPrefs.getString(getContext(), Constants.ID);
+            Log.d("vehicleOnOffReq", "" + userId);
+        vehicleOnOffReq.setUserId(UserId);
+        vehicleOnOffReq.setVehicleId(VehicleId);
+        vehicleOnOffReq.setVehicleOnOff(VehicleOnOff);
+
+            if (Utils.isInternetConnected(getActivity())) {
+                Utils.showProgressDialog(getActivity());
+                RestClient.getvehicleOnOff(vehicleOnOffReq, new Callback<VehicleOnOffResponse>() {
+                    @Override
+                    public void onResponse(Call<VehicleOnOffResponse> call, Response<VehicleOnOffResponse> response) {
+                        Utils.dismissProgressDialog();
+                        if (response.body() != null) {
+                            if (response.body().getStatus()) {
+
+                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                getAllVehicle();
+                            }else {
+
+                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<VehicleOnOffResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+
+
+    }
 }

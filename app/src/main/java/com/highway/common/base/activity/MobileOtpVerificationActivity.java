@@ -199,6 +199,12 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
                                 userId = response.body().getUser().getUserId();
                                 HighwayPrefs.putString(getApplicationContext(), Constants.ID, userId);
 
+                                Log.e("verifyDriver","::"+response.body().getUser().getDriverVerifyBy());
+
+                                HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, response.body().getUser().getDriverVerifyBy());
+
+
+
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -241,6 +247,8 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
 
         HighwayPrefs.putBoolean(getApplicationContext(), Constants.LOGGED_IN, true);
         HighwayPrefs.putString(getApplicationContext(), Constants.ID, verifyOtpResponse.getUser().getUserId());
+        Log.e("verifyDriverTest","::"+verifyOtpResponse.getUser().getDriverVerifyBy());
+        HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, verifyOtpResponse.getUser().getDriverVerifyBy());
         HighwayPrefs.putString(getApplicationContext(), Constants.NAME, verifyOtpResponse.getUser().getName());
         HighwayPrefs.putString(getApplicationContext(), Constants.USERMOBILE, verifyOtpResponse.getUser().getMobile());
         HighwayPrefs.putString(getApplicationContext(), Constants.User_statuss, verifyOtpResponse.getUser().getUserStatus());

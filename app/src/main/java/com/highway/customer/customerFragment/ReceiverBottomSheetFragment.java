@@ -127,9 +127,16 @@ public class ReceiverBottomSheetFragment extends BottomSheetDialogFragment {
             cursor.moveToFirst();
 
             int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            String name=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+
+
             //Log.i(TAG, "Contacts Phone Number: " + cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
             receiverPhoneNo = cursor.getString(phoneIndex);
-            edtTextMobNo.setText(receiverPhoneNo);
+
+            edtTextMobNo.setText(receiverPhoneNo.trim());
 
             receiverName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             edtTextName.setText(receiverName);

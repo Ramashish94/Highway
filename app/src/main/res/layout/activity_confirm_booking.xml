@@ -83,7 +83,7 @@
                             android:layout_width="8px"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:background="@color/green" />
+                            android:background="@color/red" />
 
                         <TextView
                             android:id="@+id/edtDropLocation"
@@ -154,14 +154,14 @@
                 android:id="@+id/mobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phone : 8285886155"
+                android:text=""
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/TvUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Reciever Name : Raj"
+                android:text=""
                 android:textColor="@color/black" />
 
 

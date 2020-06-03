@@ -59,7 +59,8 @@
                 android:layout_marginBottom="@dimen/margin_30"
                 android:background="@drawable/edit_text_shape"
                 android:gravity="top|left"
-                android:hint=" Comment"
+                android:hint="Comment"
+                android:padding="10dp"
                 android:inputType="text" />
 
             <Button
@@ -72,8 +73,8 @@
                 android:layout_marginRight="@dimen/margin_left_20"
                 android:layout_marginBottom="@dimen/margin_bottom_20"
                 android:background="@drawable/rounded_btn_shape"
-                android:text="Cancle "
-                android:textAllCaps="true"
+                android:text="Submit "
+                android:textAllCaps="false"
                 android:textColor="@color/white" />
 
         </LinearLayout>

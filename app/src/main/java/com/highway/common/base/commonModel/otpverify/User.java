@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
+
+    @SerializedName("driverVerifyBy")
+    @Expose
+    private String driverVerifyBy;
     @SerializedName("User_Id")
     @Expose
     private String userId;
@@ -128,4 +132,11 @@ public class User {
         this.isBoolean = isBoolean;
     }
 
+    public String getDriverVerifyBy() {
+        return driverVerifyBy;
+    }
+
+    public void setDriverVerifyBy(String driverVerifyBy) {
+        this.driverVerifyBy = driverVerifyBy;
+    }
 }

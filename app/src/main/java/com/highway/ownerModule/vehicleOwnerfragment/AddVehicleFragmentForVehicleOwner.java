@@ -217,13 +217,13 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
             check = true;
         }
 
-        if (vehicleDescription.isEmpty() && edtVehicleDescription.length() <= 10) {
+      /*  if (vehicleDescription.isEmpty() && edtVehicleDescription.length() <= 10) {
             edtVehicleDescription.setError("pls enter valid vehicle description");
             check = false;
         } else {
             edtVehicleDescription.setError(null);
             check = true;
-        }
+        }*/
 
         return check;
 
@@ -405,7 +405,10 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
                                 dashBoardFragmentForVehicleOwner = DashBoardFragmentForVehicleOwner.newInstance();
                                 Bundle bundle = new Bundle();
                                 dashBoardFragmentForVehicleOwner.setArguments(bundle);
-                                ((DashBoardActivity) getActivity()).replaceFragment(dashBoardFragmentForVehicleOwner, " ");
+
+                                getActivity().getSupportFragmentManager().popBackStackImmediate("Frag1", 0);
+
+                             //   ((DashBoardActivity) getActivity()).replaceFragment(dashBoardFragmentForVehicleOwner, " ");
 
                                /* Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                                 startActivity(intent);

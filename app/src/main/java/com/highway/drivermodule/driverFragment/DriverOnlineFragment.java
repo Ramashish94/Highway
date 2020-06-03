@@ -111,18 +111,25 @@ public class DriverOnlineFragment extends Fragment implements View.OnClickListen
         navigateToMap.setOnClickListener(this);
         mylocation.setOnClickListener(this);
 
-        if (HighwayPrefs.getBoolean(activity, Constants.ONLINE)) {
-            onlineOfflineButton.setText("Click here to go online");
-            onlineOfflineButton.setBackgroundColor(activity.getResources().getColor(R.color.red));
-            onlineFramelayout.setVisibility(View.GONE);
-            offlineHintImage.setVisibility(View.VISIBLE);
+        if (HighwayPrefs.getString(getActivity(), Constants.driverVerifyBy).equalsIgnoreCase("0")){
 
-        } else {
-            onlineOfflineButton.setText("Click here to go offline");
-            onlineOfflineButton.setBackgroundColor(activity.getResources().getColor(R.color.green));
-            onlineFramelayout.setVisibility(View.VISIBLE);
-            offlineHintImage.setVisibility(View.GONE);
 
+            if (HighwayPrefs.getBoolean(activity, Constants.ONLINE)) {
+                onlineOfflineButton.setText("Click here to go online");
+                onlineOfflineButton.setBackgroundColor(activity.getResources().getColor(R.color.red));
+                onlineFramelayout.setVisibility(View.GONE);
+                offlineHintImage.setVisibility(View.VISIBLE);
+
+            } else {
+                onlineOfflineButton.setText("Click here to go offline");
+                onlineOfflineButton.setBackgroundColor(activity.getResources().getColor(R.color.green));
+                onlineFramelayout.setVisibility(View.VISIBLE);
+                offlineHintImage.setVisibility(View.GONE);
+
+            }
+
+        }else {
+            onlineOfflineButton.setVisibility(View.GONE);
         }
     }
 

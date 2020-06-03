@@ -46,6 +46,10 @@ import com.highway.millUserModule.SpinnerModelForMiller.ApproxLoad.ApproxLoadDro
 import com.highway.millUserModule.SpinnerModelForMiller.ApproxLoad.ApproxLoadDropDownResponse;
 import com.highway.millUserModule.SpinnerModelForMiller.GoodsTypes.GoodsTypeDropDownRequest;
 import com.highway.millUserModule.SpinnerModelForMiller.GoodsTypes.GoodsTypesDropDownResponse;
+import com.highway.ownerModule.ownerRequest.vehicleOnOff.VehicleOnOffReq;
+import com.highway.ownerModule.ownerrrModel.VehicleOnOffResp.VehicleOnOffResponse;
+import com.highway.ownerModule.ownerrrModel.cityResp.CityResp;
+import com.highway.ownerModule.ownerrrModel.stateResp.StateResp;
 import com.highway.ownerModule.vehileOwnerModelsClass.addNewDriverThroughVehicleOwner.AddNewDriverRequest;
 import com.highway.ownerModule.vehileOwnerModelsClass.addNewDriverThroughVehicleOwner.AddNewDriverResponse;
 import com.highway.ownerModule.vehileOwnerModelsClass.addVehicle.AddVehicleRequest;
@@ -119,6 +123,18 @@ public class RestClient {
     }
 
 
+    // state
+    public static void onState(Callback<StateResp> addNewDriverResponseCallback) {
+        RetrofitClient.getClient().onState().enqueue(addNewDriverResponseCallback);
+    }
+
+    // City
+    public static void onCity(String stateId, Callback<CityResp> addNewDriverResponseCallback) {
+        RetrofitClient.getClient().onCity(stateId).enqueue(addNewDriverResponseCallback);
+    }
+
+
+
     public static void registerForPush(RegisterForPushModel obj, Callback<ResponseBody> addNewDriverResponseCallback) {
         RetrofitClient.getClient().registerForPush(obj).enqueue(addNewDriverResponseCallback);
     }
@@ -160,6 +176,10 @@ public class RestClient {
     // getAll Vehicle details
     public static void getAllVehicleDetails(GetAllVehicleRequest getAllVehicleRequest, Callback<GetAllVehicleResponse> getAllVehicleResponseCallback) {
         RetrofitClient.getClient().getVehicleResponse(getAllVehicleRequest).enqueue(getAllVehicleResponseCallback);
+    }
+
+    public static void getvehicleOnOff(VehicleOnOffReq getAllVehicleRequest, Callback<VehicleOnOffResponse> getAllVehicleResponseCallback) {
+        RetrofitClient.getClient().getrvehicleOnOff(getAllVehicleRequest).enqueue(getAllVehicleResponseCallback);
     }
 
     // Assign Driver 2 vehicle

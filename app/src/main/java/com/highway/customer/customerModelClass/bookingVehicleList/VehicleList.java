@@ -9,6 +9,12 @@ public class VehicleList {
     @SerializedName("VehicleId")
     @Expose
     private String vehicleId;
+
+    @SerializedName("TimeDuration")
+    @Expose
+    private String TimeDuration;
+
+
     @SerializedName("VehicleTypeId")
     @Expose
     private String vehicleTypeId;
@@ -62,6 +68,14 @@ public class VehicleList {
 
     public String getVehicleFare() {
         return vehicleFare;
+    }
+
+    public String getTimeDuration() {
+        return TimeDuration;
+    }
+
+    public void setTimeDuration(String timeDuration) {
+        TimeDuration = timeDuration;
     }
 
     public void setVehicleFare(String vehicleFare) {

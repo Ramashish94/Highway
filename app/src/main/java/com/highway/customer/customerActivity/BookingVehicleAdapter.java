@@ -62,6 +62,7 @@ public class BookingVehicleAdapter extends RecyclerView.Adapter<BookingVehicleAd
 
         holder.tataAceTv1.setText("" + vehicleList.getVehicleName());
         holder.faireChargeTv3.setText("\u20B9" + vehicleList.getVehicleFare());
+        holder.timeDurationTv2.setText(vehicleList.getTimeDuration());
 
 
 
@@ -195,7 +196,7 @@ public class BookingVehicleAdapter extends RecyclerView.Adapter<BookingVehicleAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tataAceTv1, timeTv2, faireChargeTv3;
+        TextView tataAceTv1, timeTv2, faireChargeTv3,timeDurationTv2;
         ImageView vehicleIcons, infoImg;
         LinearLayout row_linearlayout;
 
@@ -207,6 +208,8 @@ public class BookingVehicleAdapter extends RecyclerView.Adapter<BookingVehicleAd
             vehicleIcons = itemView.findViewById(R.id.vehicleImg1);
             infoImg = itemView.findViewById(R.id.infoImg);
             row_linearlayout = itemView.findViewById(R.id.Llayout1);
+            timeDurationTv2 = itemView.findViewById(R.id.timeDurationTv2);
+
         }
     }
 

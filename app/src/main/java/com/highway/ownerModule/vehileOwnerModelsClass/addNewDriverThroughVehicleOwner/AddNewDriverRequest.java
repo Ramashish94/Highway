@@ -5,93 +5,118 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddNewDriverRequest {
 
-@SerializedName("owner_id")
-@Expose
-private String ownerId;
-@SerializedName("driverName")
-@Expose
-private String driverName;
-@SerializedName("driverMobile")
-@Expose
-private String driverMobile;
-@SerializedName("driverEmail")
-@Expose
-private String driverEmail;
-@SerializedName("driverDLNo")
-@Expose
-private String driverDLNo;
-@SerializedName("driverAddress")
-@Expose
-private String driverAddress;
-@SerializedName("dlexpiryDate")
-@Expose
-private String dlexpiryDate;
-@SerializedName("vehicleId")
-@Expose
-private String vehicleId;
 
-public String getOwnerId() {
-return ownerId;
-}
+    @SerializedName("stateId")
+    @Expose
+    private String stateId;
+    @SerializedName("cityId")
+    @Expose
+    private String cityId;
 
-public void setOwnerId(String ownerId) {
-this.ownerId = ownerId;
-}
 
-public String getDriverName() {
-return driverName;
-}
+    @SerializedName("owner_id")
+    @Expose
+    private String ownerId;
+    @SerializedName("driverName")
+    @Expose
+    private String driverName;
+    @SerializedName("driverMobile")
+    @Expose
+    private String driverMobile;
+    @SerializedName("driverEmail")
+    @Expose
+    private String driverEmail;
+    @SerializedName("driverDLNo")
+    @Expose
+    private String driverDLNo;
+    @SerializedName("driverAddress")
+    @Expose
+    private String driverAddress;
+    @SerializedName("dlexpiryDate")
+    @Expose
+    private String dlexpiryDate;
+    @SerializedName("vehicleId")
+    @Expose
+    private String vehicleId;
 
-public void setDriverName(String driverName) {
-this.driverName = driverName;
-}
+    public String getOwnerId() {
+        return ownerId;
+    }
 
-public String getDriverMobile() {
-return driverMobile;
-}
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
-public void setDriverMobile(String driverMobile) {
-this.driverMobile = driverMobile;
-}
+    public String getDriverName() {
+        return driverName;
+    }
 
-public String getDriverEmail() {
-return driverEmail;
-}
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
 
-public void setDriverEmail(String driverEmail) {
-this.driverEmail = driverEmail;
-}
+    public String getDriverMobile() {
+        return driverMobile;
+    }
 
-public String getDriverDLNo() {
-return driverDLNo;
-}
+    public void setDriverMobile(String driverMobile) {
+        this.driverMobile = driverMobile;
+    }
 
-public void setDriverDLNo(String driverDLNo) {
-this.driverDLNo = driverDLNo;
-}
+    public String getDriverEmail() {
+        return driverEmail;
+    }
 
-public String getDriverAddress() {
-return driverAddress;
-}
+    public void setDriverEmail(String driverEmail) {
+        this.driverEmail = driverEmail;
+    }
 
-public void setDriverAddress(String driverAddress) {
-this.driverAddress = driverAddress;
-}
+    public String getDriverDLNo() {
+        return driverDLNo;
+    }
 
-public String getDlexpiryDate() {
-return dlexpiryDate;
-}
+    public void setDriverDLNo(String driverDLNo) {
+        this.driverDLNo = driverDLNo;
+    }
 
-public void setDlexpiryDate(String dlexpiryDate) {
-this.dlexpiryDate = dlexpiryDate;
-}
+    public String getDriverAddress() {
+        return driverAddress;
+    }
 
-public String getVehicleId() {
-return vehicleId;
-}
+    public void setDriverAddress(String driverAddress) {
+        this.driverAddress = driverAddress;
+    }
 
-public void setVehicleId(String vehicleId) {
-this.vehicleId = vehicleId;
-}
+    public String getDlexpiryDate() {
+        return dlexpiryDate;
+    }
 
+    public void setDlexpiryDate(String dlexpiryDate) {
+        this.dlexpiryDate = dlexpiryDate;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+
+    public String getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(String stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
 }

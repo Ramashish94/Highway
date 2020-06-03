@@ -117,8 +117,11 @@ public class RatingBottomDialogFragmentForCustomer extends BottomSheetDialogFrag
             @Override
             public void onResponse(Call<UpdateTripRatingByUserResp> call, Response<UpdateTripRatingByUserResp> response) {
                 if (response != null && response.code() == 200 && response.body() != null) {
-                    if (response.body().getStatus()) ;
-                    dismiss();
+                    if (response.body().getStatus()) {
+                        dismiss();
+                    }else {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

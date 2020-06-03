@@ -5,9 +5,81 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ownerModule.vehicleOwnerfragment.GetAllVehicleItem_ListFragment">
+   >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_marginRight="5dp"
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
 
 
+                    android:tint="#ffffff"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:src="@drawable/back_arrow_icon"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_back"
+                    android:maxLines="1"
+                    android:layout_marginRight="50dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:text="Vehical detail"
+                    android:textColor="@color/white" />
+
+                <Switch
+                    android:id="@+id/toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:maxLines="1"
+                    android:theme="@style/SCBSwitch"
+                    android:singleLine="true"
+                    android:padding="10dp"
+
+
+
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +89,7 @@
         card_view:cardUseCompatPadding="true">
         <!--card_view:cardBackgroundColor="@color/cardviewbackground"-->
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,52 +97,32 @@
             android:id="@+id/llCard"
             android:paddingBottom="@dimen/padding_5"
             android:layout_gravity="center">
-
-           <!-- <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/VehicleImageView"
-                civ_border_color="@color/yellow"
-                civ_border_overlay="true"
-                civ_border_width="1dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_left_5"
-                android:src="@drawable/circularimg" />-->
-
-            <Switch
-                android:id="@+id/toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:textSize="9dp"
-                android:layout_gravity="right"
-                android:theme="@style/SCBSwitch"
-                android:singleLine="true"
-                android:padding="10dp"
-
-
-
-                android:visibility="visible" />
-
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="75dp"
+                android:layout_width="fill_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="0dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_height="75dp"
-                android:scaleType="centerInside"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
                 />
+            </RelativeLayout>
+            <!-- <de.hdodenhof.circleimageview.CircleImageView
+                 android:id="@+id/VehicleImageView"
+                 civ_border_color="@color/yellow"
+                 civ_border_overlay="true"
+                 civ_border_width="1dp"
+                 android:layout_width="60dp"
+                 android:layout_height="60dp"
+                 android:layout_gravity="center_vertical"
+                 android:layout_marginLeft="@dimen/margin_left_5"
+                 android:src="@drawable/circularimg" />-->
+
             <LinearLayout
-                android:layout_toRightOf="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -79,6 +132,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                  
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -115,7 +169,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                  
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -150,7 +204,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -187,7 +241,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_5"
-                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -195,7 +248,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingLeft="@dimen/padding_left_15"
+                        android:paddingLeft="@dimen/_10dp"
                         android:paddingTop="@dimen/margin_5"
                         android:paddingRight="@dimen/margin_5"
                         android:paddingBottom="@dimen/margin_5"
@@ -223,8 +276,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:visibility="gone"
+                   
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -261,8 +313,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:visibility="gone"
+                 
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -300,8 +351,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:visibility="gone"
+                   
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical">
 
@@ -375,8 +425,19 @@
 
                  </LinearLayout>-->
             </LinearLayout>
-            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnLocation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtTxtMobNo"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/margin_40"
+                android:background="@drawable/btn_shape_draw"
+                android:text="Location "
+                android:textColor="@color/project_yellow_color" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 </LinearLayout>

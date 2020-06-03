@@ -45,6 +45,10 @@ import com.highway.millUserModule.SpinnerModelForMiller.ApproxLoad.ApproxLoadDro
 import com.highway.millUserModule.SpinnerModelForMiller.ApproxLoad.ApproxLoadDropDownResponse;
 import com.highway.millUserModule.SpinnerModelForMiller.GoodsTypes.GoodsTypeDropDownRequest;
 import com.highway.millUserModule.SpinnerModelForMiller.GoodsTypes.GoodsTypesDropDownResponse;
+import com.highway.ownerModule.ownerRequest.vehicleOnOff.VehicleOnOffReq;
+import com.highway.ownerModule.ownerrrModel.VehicleOnOffResp.VehicleOnOffResponse;
+import com.highway.ownerModule.ownerrrModel.cityResp.CityResp;
+import com.highway.ownerModule.ownerrrModel.stateResp.StateResp;
 import com.highway.ownerModule.vehileOwnerModelsClass.addNewDriverThroughVehicleOwner.AddNewDriverRequest;
 import com.highway.ownerModule.vehileOwnerModelsClass.addNewDriverThroughVehicleOwner.AddNewDriverResponse;
 import com.highway.ownerModule.vehileOwnerModelsClass.addVehicle.AddVehicleRequest;
@@ -69,6 +73,8 @@ import com.highway.ownerModule.vehileOwnerModelsClass.vehicleTypeDropDowan.Vehic
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
@@ -109,6 +115,17 @@ public interface ApiInterface {
     @POST("index.php/api/Login/addDriver")
     Call<AddNewDriverResponse> addNewDriverResponseCall(@Body AddNewDriverRequest addNewDriverRequest);
 
+
+    @POST("index.php/api/Login/stateDropdown")
+    Call<StateResp> onState();
+
+
+    @POST("index.php/api/Login/cityDropdown")
+    @FormUrlEncoded
+    Call<CityResp> onCity(@Field("stateId") String stateId);
+
+
+
     // vehicle type drop dowan --spinner for vehicle owners for Add new Vehicle
     @POST("api/Vehicle/vehicleTypeDropdown")
     Call<VehicleTypeDropDowanResponse> vehicleTypeDropDowanResp(@Body VehicleTypeDropDowanRequest vehicleTypeDropDowanRequest);
@@ -139,6 +156,13 @@ public interface ApiInterface {
 
     @POST("index.php/api/Vehicle/getAllVehicleDetails")
     Call<GetAllVehicleResponse> getVehicleResponse(@Body GetAllVehicleRequest getAllVehicleRequest);
+
+
+    @POST("index.php/api/Vehicle/vehicleOnOff")
+    Call<VehicleOnOffResponse> getrvehicleOnOff(@Body VehicleOnOffReq vehicleOnOffReq);
+
+
+
 
     //Goods type DataVehicle Booking With details Activity
     @POST("api/Trip/selectYourGoodType")
