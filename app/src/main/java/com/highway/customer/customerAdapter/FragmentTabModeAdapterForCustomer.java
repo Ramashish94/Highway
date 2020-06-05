@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.highway.customer.customerFragment.CancelFragmentForCustomer;
 import com.highway.customer.customerFragment.CompletedFragmentForCustomer;
-import com.highway.customer.customerFragment.OnGoingFragmentForCustomer;
-import com.highway.customer.customerFragment.PendingFragmentForCustomer;
 import com.highway.customer.customerFragment.UpCommingFragmentForCustomer;
 
 import java.util.List;
@@ -40,10 +38,6 @@ public class FragmentTabModeAdapterForCustomer extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         if (customerfragments.get(position)instanceof UpCommingFragmentForCustomer){
             return "UPCOMING";
-        }else if (customerfragments.get(position)instanceof OnGoingFragmentForCustomer){
-            return "ONGOING";
-       /* }else if (customerfragments.get(position)instanceof PendingFragmentForCustomer){
-            return "PENDING";*/
         }else if (customerfragments.get(position)instanceof CompletedFragmentForCustomer){
             return "COMPLETED";
         }if (customerfragments.get(position)instanceof CancelFragmentForCustomer){

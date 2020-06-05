@@ -172,11 +172,12 @@
             android:layout_height="40dp"
             android:layout_below="@+id/forgot_password"
             android:layout_marginTop="@dimen/margin_top_15"
-            android:text="@string/resend_otp"
-            android:gravity="center"
-            android:textStyle="bold"
             android:enabled="false"
-            android:textColor="@color/project_yellow_color" />
+            android:gravity="center"
+            android:text="@string/resend_otp"
+            android:textColor="@color/project_yellow_color"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
 
     </LinearLayout>

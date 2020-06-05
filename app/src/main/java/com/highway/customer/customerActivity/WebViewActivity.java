@@ -114,16 +114,16 @@ public class WebViewActivity extends AppCompatActivity {
         rlNetworkUI.setVisibility(View.GONE);
 
         progressBar.setVisibility(View.VISIBLE);
-        mWebView.loadUrl("http://highway.vrok.in/privacypolicy/terms");
+        mWebView.loadUrl("http://dev.thehighways.in/privacypolicy/terms");
         switch (title) {
             case "Terms & Conditions":
                 progressBar.setVisibility(View.VISIBLE);
-                mWebView.loadUrl("http://highway.vrok.in/privacypolicy/terms");
+                mWebView.loadUrl("http://dev.thehighways.in/privacypolicy/terms");
                 break;
 
             case "Privacy Policy":
                 progressBar.setVisibility(View.VISIBLE);
-                mWebView.loadUrl("http://highway.vrok.in/privacypolicy");
+                mWebView.loadUrl("http://dev.thehighways.in/privacypolicy");
                 break;
 
             case "Read More":

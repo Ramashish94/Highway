@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -53,7 +55,6 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
     public Button btnAddNewDriver;
     String driverName, driverEmail, driverMobNo, driverDlNo, dlExpireDate, driverAddress ,user_Id;
     private DatePickerDialog datePickerDialog;
-    private Activity view;
     private Spinner vehicleSpinners;
     private String vehicleId;
     List<String> vehicleNames;
@@ -69,6 +70,7 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
     Spinner spState, spCity;
     String stateId = "";
     String cityIDd = "";
+    
 
     public AddDriverFragmentForVehicleOwner() {
         // Required empty public constructor
@@ -81,6 +83,8 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
         return fragment;
     }
 
+
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,15 +272,17 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
 
     public void ValidationAddDriver() {
         if (inputValidation()) {
+            Toast.makeText(getActivity(), "Data is Valid ", Toast.LENGTH_SHORT).show();
 
-            if (cityIDd.equalsIgnoreCase("125")){
+            if (TextUtils.isEmpty(cityIDd) || cityIDd.equalsIgnoreCase("125")){
                 Toast.makeText(getActivity(),"Select the City",Toast.LENGTH_SHORT).show();
                 return;
-            }else if (stateId.equalsIgnoreCase("125254555")){
+            }else if (TextUtils.isEmpty(stateId)  ||  stateId.equalsIgnoreCase("125254555")){
 
                 Toast.makeText(getActivity(),"Select the state",Toast.LENGTH_SHORT).show();
                 return;
             }
+            Toast.makeText(getActivity(), "City state valid ", Toast.LENGTH_SHORT).show();
 
 
             AddNewDriverRequest addNewDriverRequest = new AddNewDriverRequest();
@@ -293,11 +299,13 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
             addNewDriverRequest.setStateId(stateId);
 
             Utils.showProgressDialog(getActivity());
+            Toast.makeText(getActivity(), "Going to hit Api ", Toast.LENGTH_SHORT).show();
 
             RestClient.addNewDriver(addNewDriverRequest, new Callback<AddNewDriverResponse>() {
                 @Override
                 public void onResponse(Call<AddNewDriverResponse> call, Response<AddNewDriverResponse> response) {
                     Utils.dismissProgressDialog();
+                    Toast.makeText(getActivity(), "Add new Driver response ==="+response.body().getStatus(), Toast.LENGTH_SHORT).show();
 
                     if (response.body() != null) {
                         if (response.body().getStatus()) {
@@ -334,7 +342,7 @@ public class AddDriverFragmentForVehicleOwner extends Fragment {
 
                 @Override
                 public void onFailure(Call<AddNewDriverResponse> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Add new Driver Failed ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Add new Driver Failed "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

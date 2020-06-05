@@ -48,7 +48,7 @@ android {
     }
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             multiDexEnabled true
             def uatSigningKey = signingConfigs.highway
             signingConfig uatSigningKey

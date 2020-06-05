@@ -36,7 +36,7 @@ public class DashBordFragmentForCustomer extends Fragment {
     private ViewPager myBookingViewPager;
     CancelFragmentForCustomer cancelFragmentForCustomer;
     CompletedFragmentForCustomer completedFragmentForCustomer;
-    OnGoingFragmentForCustomer onGoingFragmentForCustomer;
+    //OnGoingFragmentForCustomer onGoingFragmentForCustomer;
     UpCommingFragmentForCustomer upCommingFragmentForCustomer;
     PendingFragmentForCustomer pendingFragmentForCustomer;
    // DashBoardActivity dashBoardActivity;
@@ -71,13 +71,13 @@ public class DashBordFragmentForCustomer extends Fragment {
         myBookingViewPager = view.findViewById(R.id.myBookingViewPager);
 
         upCommingFragmentForCustomer = new UpCommingFragmentForCustomer();
-        onGoingFragmentForCustomer = new OnGoingFragmentForCustomer();
+        //onGoingFragmentForCustomer = new OnGoingFragmentForCustomer();
        // pendingFragmentForCustomer = new PendingFragmentForCustomer();
         completedFragmentForCustomer = new CompletedFragmentForCustomer();
         cancelFragmentForCustomer = new CancelFragmentForCustomer();
 
         customerfragmentList.add(upCommingFragmentForCustomer);
-        customerfragmentList.add(onGoingFragmentForCustomer);
+        //customerfragmentList.add(onGoingFragmentForCustomer);
         //customerfragmentList.add(pendingFragmentForCustomer);
         customerfragmentList.add(completedFragmentForCustomer);
         customerfragmentList.add(cancelFragmentForCustomer);
@@ -162,9 +162,7 @@ public class DashBordFragmentForCustomer extends Fragment {
                             if (getAllTripByUserIdResponse.getCompletedTrips() != null && getAllTripByUserIdResponse.getCompletedTrips().size() > 0) {
                                 customerAllTripsActivity.setCompletedTrips(getAllTripByUserIdResponse.getCompletedTrips());
                             }
-                            if (getAllTripByUserIdResponse.getOngoingTrips() != null && getAllTripByUserIdResponse.getOngoingTrips().size() > 0) {
-                                customerAllTripsActivity.setOngoingTrips(getAllTripByUserIdResponse.getOngoingTrips());
-                            }
+
                             if (getAllTripByUserIdResponse.getUpcomingTrips() != null && getAllTripByUserIdResponse.getUpcomingTrips().size() > 0) {
                                 customerAllTripsActivity.setUpcomingTrips(getAllTripByUserIdResponse.getUpcomingTrips());
                             }
@@ -188,7 +186,7 @@ public class DashBordFragmentForCustomer extends Fragment {
 
     public void updateAllCustomerFragment() {
         upCommingFragmentForCustomer.upcomingUpdatedTripListForCustomer(customerAllTripsActivity.getUpcomingTrips());
-        onGoingFragmentForCustomer.ongoingUpdatedTripListForCustomer(customerAllTripsActivity.getOngoingTrips());
+        //onGoingFragmentForCustomer.ongoingUpdatedTripListForCustomer(customerAllTripsActivity.getOngoingTrips());
         completedFragmentForCustomer.completedUpdatedTripListForCustomer(customerAllTripsActivity.getCompletedTrips());
         cancelFragmentForCustomer.cancelUpdatedTripListForCustomer(customerAllTripsActivity.getCancelTrips());
     }

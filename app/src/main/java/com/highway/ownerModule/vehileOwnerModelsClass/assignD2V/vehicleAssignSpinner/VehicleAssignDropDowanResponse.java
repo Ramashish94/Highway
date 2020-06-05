@@ -11,7 +11,7 @@ public class VehicleAssignDropDowanResponse {
     private Boolean status;
     @SerializedName("vehicleData")
     @Expose
-    private VehicleData vehicleData;
+    private VehicleData vehicleData= new VehicleData();
 
     public Boolean getStatus() {
         return status;

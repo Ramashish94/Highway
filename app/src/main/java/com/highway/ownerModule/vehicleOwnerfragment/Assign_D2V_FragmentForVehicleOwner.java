@@ -50,7 +50,7 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
     List<String> driverNames;
     private Spinner driversAssignSpinner;
     private Spinner vehiclesAssignSpinner;
-    String driverId,vehicleId;
+    String driverId, vehicleId;
     VehicleAssignDropDowanResponse vehicleAssignDropDowanResponse;
     DashBoardActivity dashBoardActivity;
     private DashBoardFragmentForVehicleOwner dashBoardFragmentForVehicleOwner;
@@ -154,13 +154,20 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
                 if (response.body() != null) {
                     if (response.body().getStatus()) {
                         driverDropDownResponse = response.body();
-
+                        DataModel data = null;
                         Log.d("data", "" + response.body());
+                        if (driverDropDownResponse.getData() != null) {
+                            data = driverDropDownResponse.getData();
+                            DriverDatum driverDatum = new DriverDatum();
+                            driverDatum.setDriverName("--- Select Driver Name ---");
+                            data.getDriverData().add(0, driverDatum);
+                        } else {
+                            data = new DataModel();
+                            DriverDatum driverDatum = new DriverDatum();
+                            driverDatum.setDriverName("--- Select Driver Name ---");
+                            data.getDriverData().add(0, driverDatum);
+                        }
 
-                        DataModel data = driverDropDownResponse.getData();
-                        DriverDatum driverDatum = new DriverDatum();
-                        driverDatum.setDriverName("--- Select Driver Name ---");
-                        data.getDriverData().add(0, driverDatum);
 
                         if (data != null && data.getDriverData().size() > 0) {
 
@@ -174,6 +181,8 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             driversAssignSpinner.setAdapter(dataAdapter);
                         }
+
+
                     }
                 }
             }
@@ -205,13 +214,19 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
 
                     if (response.body().getStatus()) {
                         vehicleAssignDropDowanResponse = response.body();
-
+                        VehicleData vehicleData = null;
                         Log.d("data", "" + response.body());
+                        if (vehicleAssignDropDowanResponse.getVehicleData() != null) {
+                            vehicleData = vehicleAssignDropDowanResponse.getVehicleData();
+                            if (vehicleData != null) {
+                                VehicleDataName vehicleDataName = new VehicleDataName();
+                                vehicleDataName.setVehicleNameWithNumber("--- Select Vehicle Name ---");
+                                vehicleData.getVehicleDataName().add(0, vehicleDataName);
+                            }else{
 
-                        VehicleData vehicleData = vehicleAssignDropDowanResponse.getVehicleData();
-                        VehicleDataName vehicleDataName = new VehicleDataName();
-                        vehicleDataName.setVehicleNameWithNumber("--- Select Vehicle Name ---");
-                        vehicleData.getVehicleDataName().add(0, vehicleDataName);
+                            }
+
+                        }
 
                         if (vehicleData != null && vehicleData.getVehicleDataName().size() > 0) {
 
@@ -224,6 +239,7 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             vehiclesAssignSpinner.setAdapter(dataAdapter);
                         }
+
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -270,7 +286,7 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
                         ((DashBoardActivity) getActivity()).replaceFragment(dashBoardFragmentForVehicleOwner, " ");
 
                         Toast.makeText(getActivity(), "Assign Driver to  Vehicle   SuccessFully", Toast.LENGTH_SHORT).show();
-                       // getActivity().finish();
+                        // getActivity().finish();
                     }
                 }
             }

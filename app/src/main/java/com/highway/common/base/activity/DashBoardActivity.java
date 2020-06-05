@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.renderscript.Script;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -236,11 +237,11 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
         MyFirebaseServiceMessaging myFirebaseServiceMessaging = new MyFirebaseServiceMessaging();
         myFirebaseServiceMessaging.setPushListener(this);
-        getPushData();
+        //getPushData();
         navigationInitView();
         updateNavViewHeader();
-        navAccordingRoleId();// According RoleId Navigation Icon
 
+        navAccordingRoleId();
 
     }
 
@@ -978,7 +979,6 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onResume() {
         super.onResume();
-       // navAccordingRoleId();
 
 
     }
@@ -1083,14 +1083,19 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 if (response != null && response.code() == 200 && response.body() != null) {
                     TripStatus tripStatus = response.body().getDriverTripStatus();
                     Log.d("Driver Details", "" + tripStatus.getCurrentTripStatus());
+                    HighwayApplication.getInstance().setCurrentTripId(tripStatus.getBookingTripId());
+                    HighwayApplication.getInstance().setUserDetails(tripStatus);
+                    if (!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED)) {
 
-                    if (!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING)) {
-                        HighwayApplication.getInstance().setCurrentTripId(tripStatus.getBookingTripId());
-                        HighwayApplication.getInstance().setUserDetails(tripStatus);
                         incomingFragment = IncomingRequestFragmentForDriver.newInstance();
                         Bundle bundle = new Bundle();
                         incomingFragment.setArguments(bundle);
                         replaceFragment(incomingFragment, "Online");
+                    }else if (tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED) || tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE)){
+                        showInvoiceBottomSheetDriver();
+                    }else if(!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING)){
+                        showratingBottomSheetDriver();
+
                     }
 
                 }
@@ -1139,10 +1144,10 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 if (response != null && response.code() == 200 && response.body() != null) {
                     TripStatus customerTripStatus = response.body().getDriverTripStatus();
                     //  Log.d("Customer Details", "" + customerTripStatus.getCurrentTripStatus());
-
+                    HighwayApplication.getInstance().setCurrentTripId(customerTripStatus.getBookingTripId());
+                    HighwayApplication.getInstance().setUserDetails(customerTripStatus);
                     if (customerTripStatus.getRatingStatus().equalsIgnoreCase("0")) {
-                        HighwayApplication.getInstance().setCurrentTripId(customerTripStatus.getBookingTripId());
-                        HighwayApplication.getInstance().setUserDetails(customerTripStatus);
+
 
 
                         if (customerTripStatus.getCurrentTripStatus().equalsIgnoreCase(TRIP_ACCEPTED)
@@ -1161,6 +1166,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                             showratingBottomSheetForCustomer();
 
                         } else if (customerTripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING)) {
+                            showratingBottomSheetForCustomer();
+
                         }
 
                        /* dashBordFragmentForCustomer = DashBordFragmentForCustomer.newInstance();

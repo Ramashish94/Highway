@@ -64,7 +64,7 @@ public class DashBoardFragmentForDriver extends Fragment /*implements LocationLi
 
     DriverAllTripsActivity dashBoardActivity;
     UpComingFragmentForDriver upComingFragmentForDriver;
-    OnGoingFragmentForDriver onGoingFragmentForDriver;
+   // OnGoingFragmentForDriver onGoingFragmentForDriver;
     PendingFragmentForDriver pendingFragmentForDriver;
     CompletedFragmentForDriver completedFragmentForDriver;
     CancelFragmentForDriver cancelFragmentForDriver;
@@ -112,13 +112,13 @@ public class DashBoardFragmentForDriver extends Fragment /*implements LocationLi
 
 
         upComingFragmentForDriver = new UpComingFragmentForDriver();
-        onGoingFragmentForDriver = new OnGoingFragmentForDriver();
+       // onGoingFragmentForDriver = new OnGoingFragmentForDriver();
         //   pendingFragmentForDriver = new PendingFragmentForDriver();
         completedFragmentForDriver = new CompletedFragmentForDriver();
         cancelFragmentForDriver = new CancelFragmentForDriver();
 
         driverFragmentList.add(upComingFragmentForDriver);
-        driverFragmentList.add(onGoingFragmentForDriver);
+        //driverFragmentList.add(onGoingFragmentForDriver);
         //    driverFragmentList.add(pendingFragmentForDriver);
         driverFragmentList.add(completedFragmentForDriver);
         driverFragmentList.add(cancelFragmentForDriver);
@@ -222,9 +222,7 @@ public class DashBoardFragmentForDriver extends Fragment /*implements LocationLi
                             if (getAllTripByUserIdResponse.getCompletedTrips() != null && getAllTripByUserIdResponse.getCompletedTrips().size() > 0) {
                                 dashBoardActivity.setCompletedTrips(getAllTripByUserIdResponse.getCompletedTrips());
                             }
-                            if (getAllTripByUserIdResponse.getOngoingTrips() != null && getAllTripByUserIdResponse.getOngoingTrips().size() > 0) {
-                                dashBoardActivity.setOngoingTrips(getAllTripByUserIdResponse.getOngoingTrips());
-                            }
+
                             if (getAllTripByUserIdResponse.getUpcomingTrips() != null && getAllTripByUserIdResponse.getUpcomingTrips().size() > 0) {
                                 dashBoardActivity.setUpcomingTrips(getAllTripByUserIdResponse.getUpcomingTrips());
                             }
@@ -247,7 +245,7 @@ public class DashBoardFragmentForDriver extends Fragment /*implements LocationLi
 
     public void updateAllFragment() {
         upComingFragmentForDriver.upcomingUpdatedTripListForDriver(dashBoardActivity.getUpcomingTrips());
-        onGoingFragmentForDriver.onGoingUpdatedTripListForDriver(dashBoardActivity.getOngoingTrips());
+        //onGoingFragmentForDriver.onGoingUpdatedTripListForDriver(dashBoardActivity.getOngoingTrips());
         completedFragmentForDriver.completedUpdatedTripListForDriver(dashBoardActivity.getCompletedTrips());
         cancelFragmentForDriver.cancleUpdatedTripListForDriver(dashBoardActivity.getCancelTrips());
     }

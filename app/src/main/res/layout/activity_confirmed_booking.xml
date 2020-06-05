@@ -41,8 +41,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/bottomSheet"
-                >
+                android:layout_above="@+id/bottomSheet">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +68,7 @@
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="GaurGaurGaurGaurGaurGaurGaurGaur City 2" />
+                            android:text="" />
 
                         <ImageView
                             android:layout_width="0dp"
@@ -86,7 +85,7 @@
                             android:ellipsize="end"
                             android:lines="1"
                             android:paddingLeft="@dimen/_10dp"
-                            android:text="GaurGaurGaurGaurGaurGaurGaurGaurGaurGaur City 2" />
+                            android:text="" />
 
                     </LinearLayout>
 
@@ -147,12 +146,20 @@
                     android:background="@color/darkwhite" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tripStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/app_bg"
+                android:textColor="@color/black_primary"
+                android:textStyle="bold"
+                android:text="You are on your way ...." />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="70">
-
 
                 <ImageView
                     android:id="@+id/imgIV"
@@ -161,7 +168,6 @@
                     android:layout_gravity="center"
                     android:paddingTop="@dimen/_10ssp"
                     app:srcCompat="@drawable/vehicle" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -198,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10dp"
                             android:text="Searching for driver...."
-                            android:textColor="@color/quantum_grey700"/>
+                            android:textColor="@color/quantum_grey700" />
 
 
                         <LinearLayout
@@ -216,6 +222,7 @@
                                 android:textColor="@color/red"
 
                                 android:textSize="12sp" />
+
                             <TextView
                                 android:id="@+id/bookingInfoForDriverAllocation"
                                 android:layout_width="wrap_content"
@@ -226,6 +233,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/LLoutPhoneCall"
                         android:layout_width="match_parent"
@@ -335,11 +343,13 @@
                     android:background="@color/quantum_grey" />
 
                 <LinearLayout
+                    android:id="@+id/cancelTripLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_alignParentBottom="true"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -366,7 +376,7 @@
                             android:gravity="center"
                             android:text="CANCLE TRIP "
                             android:textColor="@color/red_money"
-                            android:textSize="@dimen/margin_16"
+                            android:textSize="@dimen/margin_14"
                             android:textStyle="normal" />
                     </LinearLayout>
 
@@ -401,7 +411,7 @@
                             android:gravity="center"
                             android:text="INFO"
                             android:textColor="@color/project_color"
-                            android:textSize="@dimen/margin_16"
+                            android:textSize="@dimen/margin_14"
                             android:textStyle="normal" />
                     </LinearLayout>
                 </LinearLayout>
@@ -412,27 +422,6 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <!--
@@ -692,11 +681,6 @@
 
             </LinearLayout>
         </RelativeLayout>-->
-
-
-
-
-
 
 
 </RelativeLayout>

@@ -60,10 +60,14 @@ import com.highway.R;
 import com.highway.broadCastReceiver.MyIntentService;
 import com.highway.broadCastReceiver.MySenderBroadCast;
 import com.highway.common.base.HighwayApplication;
+import com.highway.common.base.activity.DashBoardActivity;
 import com.highway.common.base.commonModel.bookingHTrip.BookingHTripResponse;
 import com.highway.common.base.firebaseService.NotificationPushData;
+import com.highway.commonretrofit.RestClient;
 import com.highway.customer.customerFragment.InvoiceBottomDialogFragmentForCustomer;
 import com.highway.customer.customerModelClass.bookingVehicleList.BookingVehicleListResponse;
+import com.highway.customer.customerModelClass.cancleTripModel.cancleTrip.CancelTripByCustomerRequest;
+import com.highway.customer.customerModelClass.cancleTripModel.cancleTrip.CancelTripByCustomerResponse;
 import com.highway.customer.helper.FetchURL;
 import com.highway.customer.helper.TaskLoadedCallback;
 import com.highway.drivermodule.drivermodels.TripStatus;
@@ -79,6 +83,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.highway.utils.Constants.ARRIVED;
 import static com.highway.utils.Constants.COMPLETED;
@@ -98,9 +106,8 @@ import static com.highway.utils.Constants.UPCOMING;
 import static com.highway.utils.Constants.VEHICLE_NUMBER;
 import static com.highway.utils.Constants.VEHICLE_TYPE;
 
-public class BookingConformedActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, TaskLoadedCallback, View.OnClickListener {
+public class BookingConformedActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleApiClient.OnConnectionFailedListener, TaskLoadedCallback, View.OnClickListener {
 
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -126,10 +133,11 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
 
 
     private Toolbar toolbar;
-    private TextView sourceTV, destTV, driverName, vehicleName,
+    private TextView sourceTV,tripStatusTXT, destTV, driverName, vehicleName,
             bookingInfoForDriverAllocationTime, fareValue, cancelTripTV, infoTV;
     private ImageView imgTruckIV, callActionIV;
     TextView goodtype;
+    LinearLayout cancelTripLL;
     private Polyline currentPolyline;
     private GoogleMap mMap;
     private Button back_button;
@@ -213,7 +221,9 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
         sourceTV = findViewById(R.id.sourceTV);
         destTV = findViewById(R.id.destTV);
         driverName = findViewById(R.id.driverName);
+        tripStatusTXT = findViewById(R.id.tripStatus);
         vehicleName = findViewById(R.id.vehicleName);
+        cancelTripLL = findViewById(R.id.cancelTripLL);
         bookingInfoForDriverAllocationTime = findViewById(R.id.bookingInfoForDriverAllocation);
         fareValue = findViewById(R.id.fareValue);
         callActionIV = findViewById(R.id.callActionIV);
@@ -324,7 +334,7 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
         clicklistener();
         bookingTimer();
 
-        tapToLandingFromUpcoming(getIntent());
+        //tapToLandingFromUpcoming(getIntent());
     }
 
 
@@ -533,107 +543,16 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
             }
         });
 
-        //Initialize Google Play Services
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
-                mMap.setMyLocationEnabled(true);
-            }
-        } else {
-            buildGoogleApiClient();
-            mMap.setMyLocationEnabled(true);
-        }
-
     }
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
-    ///**********************
-    @Override
-    public void onLocationChanged(Location location) {
-
-        mLastLocation = location;
-        updateMyLocation();
-
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
-
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
 
 
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                    }
-
-                } else {
-
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-
-        }
-    }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
         // Origin of route
@@ -679,9 +598,9 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
             }
 
             public void onFinish() {
-                bookingInfoForDriverAllocationTime.setText("Time up!");
+                bookingInfoForDriverAllocationTime.setText("Time Out!");
                 timeUp = true;
-                showAlertDiolog("");
+                cancelledTripOperation();
 
             }
         }.start();
@@ -758,18 +677,18 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
     }
 
     private void updateMyLocation() {
-        if (mLastLocation == null) {
+        if (tripStatus == null) {
             return;
         }
-        LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        LatLng latLng = new LatLng(Double.parseDouble(tripStatus.getSourceLat()), Double.parseDouble(tripStatus.getSourceLong()));
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
+//        //stop location updates
+//        if (mGoogleApiClient != null) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+//        }
     }
 
 
@@ -780,12 +699,8 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
             case TRIP_NEW:
                 sourceTV.setText("" + sourceName);
                 destTV.setText("" + destName);
-                break;
-
-            case TRIP_ACCEPTED:
-
                 if (tripStatus != null) {
-                    driverName.setText("" + tripStatus.getName());
+                    driverName.setText("Driver Name: " + tripStatus.getName());
                     vehicleName.setText("" + tripStatus.getBookingTripCode() + " - " + tripStatus.getName());
                     sourceTV.setText("" + tripStatus.getSourceAddress());
                     destTV.setText("" + tripStatus.getDestinationAddress());
@@ -799,19 +714,73 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
                     }
                 }
 
+
+                break;
+
+            case TRIP_ACCEPTED:
+
+                if (tripStatus != null) {
+                    driverName.setText("Driver Name: " + tripStatus.getName());
+                    vehicleName.setText("Vehicle :" + tripStatus.getVehicleType() + " - " + tripStatus.getVehicleNumber());
+                    sourceTV.setText("" + tripStatus.getSourceAddress());
+                    destTV.setText("" + tripStatus.getDestinationAddress());
+
+                    driverMobile = tripStatus.getMobile();
+                    bookingSearchingLayout.setVisibility(View.GONE);
+                    LLoutPhoneCall.setVisibility(View.VISIBLE);
+                    cancelTripLL.setVisibility(View.VISIBLE);
+
+                    callActionIV.setVisibility(View.VISIBLE);
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                    }
+                }
+
                 break;
 
             case ARRIVED:
+                if (tripStatus != null) {
+                    driverName.setText("Driver Name: " + tripStatus.getName());
+                    vehicleName.setText("Vehicle :" + tripStatus.getVehicleType() + " - " + tripStatus.getVehicleNumber());
+                    sourceTV.setText("" + tripStatus.getSourceAddress());
+                    destTV.setText("" + tripStatus.getDestinationAddress());
+
+                    driverMobile = tripStatus.getMobile();
+                    bookingSearchingLayout.setVisibility(View.GONE);
+                    LLoutPhoneCall.setVisibility(View.VISIBLE);
+
+                    callActionIV.setVisibility(View.VISIBLE);
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                    }
+                }
+                cancelTripLL.setVisibility(View.VISIBLE);
 
                 break;
 
             case PICKEDUP:
+                if (tripStatus != null) {
+                    tripStatusTXT.setVisibility(View.VISIBLE);
+                    driverName.setText("Driver Name: " + tripStatus.getName());
+                    vehicleName.setText("Vehicle :" + tripStatus.getVehicleType() + " - " + tripStatus.getVehicleNumber());
+                    sourceTV.setText("" + tripStatus.getSourceAddress());
+                    destTV.setText("" + tripStatus.getDestinationAddress());
 
+                    driverMobile = tripStatus.getMobile();
+                    bookingSearchingLayout.setVisibility(View.GONE);
+                    LLoutPhoneCall.setVisibility(View.VISIBLE);
+
+                    callActionIV.setVisibility(View.VISIBLE);
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                    }
+                }
+                cancelTripLL.setVisibility(View.GONE);
                 break;
 
             case DROPPED:
                 if (tripStatus != null) {
-                    driverName.setText("" + tripStatus.getName());
+                    driverName.setText("Driver Name: " + tripStatus.getName());
                     vehicleName.setText("" + tripStatus.getBookingTripCode() + " - " + tripStatus.getName());
                     sourceTV.setText("" + tripStatus.getSourceAddress());
                     destTV.setText("" + tripStatus.getDestinationAddress());
@@ -835,7 +804,6 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
 
             case RATING:
                 break;
-
             case INVOICE:
                 break;
 
@@ -864,82 +832,30 @@ public class BookingConformedActivity extends AppCompatActivity implements OnMap
     }
 
 
-    private void tapToLandingFromUpcoming(Intent intent) {
 
-        if (intent != null) {
+    public void cancelledTripOperation() {
+            CancelTripByCustomerRequest cancelTripByCustomerRequest = new CancelTripByCustomerRequest();
+            cancelTripByCustomerRequest.setCancelBookId(HighwayApplication.getInstance().getCurrentTripId());
+            cancelTripByCustomerRequest.setCancelReasonId("1");
+            cancelTripByCustomerRequest.setCancelReasonComment("Not responding");
+            userId = HighwayPrefs.getString(getApplicationContext(), Constants.ID);
+            cancelTripByCustomerRequest.setUserId(userId);
 
-            bookingSearchingLayout.setVisibility(View.GONE);
-            LLoutPhoneCall.setVisibility(View.VISIBLE);
-            callActionIV.setVisibility(View.VISIBLE);
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-
-            Bundle bundle = getIntent().getExtras();
-            if (bundle != null) {
-                try {
-                    sourceAddLatLng = new LatLng(Double.parseDouble("" + bundle.getString("sourceLat")),
-                            Double.parseDouble("" + bundle.getString("sourceLong")));
-                    destAddLatLng = new LatLng(Double.parseDouble("" + bundle.getString("destinationLat")),
-                            Double.parseDouble("" + bundle.getString("destinationLong")));
-                } catch (Exception e) {
-                    sourceAddLatLng = null;
-                    destAddLatLng = null;
-
+            RestClient.getCancelledTripByCust(cancelTripByCustomerRequest, new Callback<CancelTripByCustomerResponse>() {
+                @Override
+                public void onResponse(Call<CancelTripByCustomerResponse> call, Response<CancelTripByCustomerResponse> response) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus()) {
+                            finish();
+                        }
+                    }
                 }
 
-                try {
-                    sourceLatitude = Double.parseDouble(bundle.getString("sourceLat"));
-                    sourceLongitude = Double.parseDouble(bundle.getString("sourceLong"));
-                    destLatitude = Double.parseDouble(bundle.getString("destinationLat"));
-                    destLongitude = Double.parseDouble(bundle.getString("destinationLong"));
-                } catch (Exception e) {
-//                    sourceLatitude = Double.parseDouble(null);
-//                    sourceLongitude = Double.parseDouble(null);
-//                    destLatitude = Double.parseDouble(null);
-//                    destLongitude = Double.parseDouble(null);
+                @Override
+                public void onFailure(Call<CancelTripByCustomerResponse> call, Throwable t) {
+                    Toast.makeText(BookingConformedActivity.this, "Server error, please  contact to admin", Toast.LENGTH_SHORT).show();
                 }
-
-                try {
-                    sourceTV.setText("" + Utils.getAddress(getApplicationContext(), sourceAddLatLng));
-                    destTV.setText("" + Utils.getAddress(getApplicationContext(), destAddLatLng));
-
-                } catch (Exception e) {
-                    sourceTV = null;
-                    destTV = null;
-                }
-
-                try {
-                    markerOptions1 = new MarkerOptions().position(new LatLng(sourceLatitude, sourceLongitude));
-                    markerOptions1.icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(R.drawable.ic_pins)));
-                    markerOptions2 = new MarkerOptions().position(new LatLng(destLatitude, destLongitude));
-                    markerOptions2.icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(R.drawable.ic_pin)));
-                } catch (Exception e) {
-                    markerOptions1 = null;
-                    markerOptions2 = null;
-
-                }
-
-
-                userName = bundle.getString("name");
-                role = bundle.getString("role");
-                getVehicleName = bundle.getString("vehicleName");
-                vehicleNumber = bundle.getString("vehicleNumber");
-                faireChargeVal = bundle.getString("fare");
-                status = bundle.getString("status");
-                tripType = bundle.getString("tripType");
-                tripStartDate = bundle.getString("startDate");
-                tripEndDate = bundle.getString("endDate");
-                pickUpTime = bundle.getString("pickupTime");
-                dropTime = bundle.getString("dropTime");
-
-                driverName.setText(userName);
-                vehicleName.setText(getVehicleName);
-                fareValue.setText(faireChargeVal);
-//            driverName.setText("" + tripStatus.getName());
-            }
-        }
+            });
     }
-
 
 }

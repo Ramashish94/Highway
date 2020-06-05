@@ -70,7 +70,6 @@ public class CompletedTripAdapterForMillUser extends RecyclerView.Adapter<Comple
             tv7FairCharge = itemView.findViewById(R.id.Tv7FairCharge);
             img1SourceIndicator = itemView.findViewById(R.id.Img1SourceIndicator);
             img2DestIndicator = itemView.findViewById(R.id.Img2DestIndicator);
-            img3_gmap_locator = itemView.findViewById(R.id.Img3_gmap_Locator);
             img4VehicleImg = itemView.findViewById(R.id.Img4VehicleImg);
         }
     }
