@@ -65,17 +65,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_10"
                 android:paddingLeft="5sp"
-                android:text="Vehicle Model Number"
+                android:text="Vehicle Model"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_20"
                 android:textStyle="normal" />
 
-            <EditText
+            <TextView
                 android:id="@+id/EdtTxtvehicleModelNos"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_35"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:padding="3dp"
                 android:background="@drawable/completed_fragment_item_shape"
-                android:hint="enter vehicle model number "
+                android:hint="enter vehicle model"
                 android:inputType="textCapWords"
                 android:paddingLeft="5sp" />
         </LinearLayout>
@@ -166,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_top_10"
                     android:paddingLeft="5sp"
+                    android:visibility="gone"
                     android:text="Vehicle Diamension Size"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_20"
@@ -182,6 +186,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="4dp"
+                        android:visibility="gone"
                         android:layout_marginEnd="4dp"
                         android:layout_marginBottom="4dp" />
 

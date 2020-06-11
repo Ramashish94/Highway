@@ -128,7 +128,7 @@ public class DashBoardFragmentForVehicleOwner extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
      // dashBoardActivity = (DashBoardActivity) getActivity();
-         ownerAllTripActivity = (OwnerAllTripActivity) getActivity();
+         ownerAllTripActivity = new OwnerAllTripActivity();
     }
 
     @Override
@@ -178,12 +178,12 @@ public class DashBoardFragmentForVehicleOwner extends Fragment {
                         }
                     }
                 } else {
-                    Toast.makeText(ownerAllTripActivity, "Response failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Response failed", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<GetAllTripByUserIdResponse> call, Throwable t) {
-                Toast.makeText(ownerAllTripActivity, "failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

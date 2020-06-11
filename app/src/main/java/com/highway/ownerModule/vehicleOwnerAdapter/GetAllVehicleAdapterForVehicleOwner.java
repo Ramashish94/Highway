@@ -68,7 +68,7 @@ public class GetAllVehicleAdapterForVehicleOwner extends RecyclerView.Adapter<Ge
             holder.toggle.setChecked(false);
         }
 
-        holder.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      /*  holder.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
@@ -81,8 +81,27 @@ public class GetAllVehicleAdapterForVehicleOwner extends RecyclerView.Adapter<Ge
 
                 }
             }
-        });
+        });*/
+        holder.toggle.setOnClickListener(new View.OnClickListener() {
 
+            //please note that objPlace, position and holder must be declared
+            //as final inside the getView() function scope.
+            @Override
+            public void onClick(View arg0) {
+                final boolean isChecked = holder.toggle.isChecked();
+                if (isChecked) {
+
+                    getAllVehicleFragmentForVehicleOwner.getonlineoffline(HighwayPrefs.getString(context, Constants.ID), vehicleDetail.getVehicleId(), "ON");
+
+
+                } else {
+                    getAllVehicleFragmentForVehicleOwner.getonlineoffline(HighwayPrefs.getString(context, Constants.ID), vehicleDetail.getVehicleId(), "OFF");
+
+
+                }
+
+            }
+        });
 
         holder.llCard.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,13 @@
 package com.highway.ownerModule.vehicleOwnerfragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.highway.R;
 import com.highway.commonretrofit.RestClient;
+import com.highway.ownerModule.vehicleOwnerActivities.AddDriverVehicleOwnerActivity;
 import com.highway.ownerModule.vehicleOwnerAdapter.GetAllDriverAdapterForVehicleOwner;
 import com.highway.ownerModule.vehileOwnerModelsClass.getAllDriver.Data;
 import com.highway.ownerModule.vehileOwnerModelsClass.getAllDriver.DriverDetail;
@@ -37,7 +41,8 @@ public class GetAllDriverFragmentForVehicleOwner extends Fragment {
     GetAllDriverAdapterForVehicleOwner getAllDriverAdapterForVehicleOwner;
     String userId;
     GetAllDriverResponse getAllDriverResponse;
-
+    LinearLayout llDriver;
+    Button btnSendDriverOtp;
 
     public GetAllDriverFragmentForVehicleOwner() {
         // Required empty public constructor
@@ -63,11 +68,19 @@ public class GetAllDriverFragmentForVehicleOwner extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_get_all_driver_fragment_for_vehicle_owner, container, false);
         getAllDriverListRecyc = view.findViewById(R.id.getAllDriverListRecy);
-
+        llDriver = view.findViewById(R.id.llDriver);
+        btnSendDriverOtp = view.findViewById(R.id.btnSendDriverOtp);
         // Adapter yhi  initialize krna tha kyunki starting me driverDetails data nhi hoga aur     recyclerOperation();  me check ga hai ki size 0 se greater ho tbhi set kre  iski vjh se hi jb api response ata hai to adapter null mil jata hai
        // getAllDriverAdapterForVehicleOwner = new GetAllDriverAdapterForVehicleOwner(driverDetails,getContext());
-
+        llDriver.setVisibility(View.GONE);
         getAllDriverList();
+        btnSendDriverOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii = new Intent(getActivity(), AddDriverVehicleOwnerActivity.class);
+                startActivity(ii);
+            }
+        });
 
         return view;
     }
@@ -111,11 +124,15 @@ public class GetAllDriverFragmentForVehicleOwner extends Fragment {
                         driverDetails = data.getDriverDetails();
 
                         if (driverDetails.size() > 0) {
+                            llDriver.setVisibility(View.GONE);
+                            getAllDriverListRecyc.setVisibility(View.VISIBLE);
                             if (getAllDriverAdapterForVehicleOwner != null) {
                                 getAllDriverAdapterForVehicleOwner.setData(driverDetails);
                                 getAllDriverAdapterForVehicleOwner.notifyDataSetChanged();
                             }
                         } else {
+                            getAllDriverListRecyc.setVisibility(View.GONE);
+                            llDriver.setVisibility(View.GONE);
                             Toast.makeText(getActivity(), "No Driver is added ! pls add Driver", Toast.LENGTH_SHORT).show();
                         }
                     }

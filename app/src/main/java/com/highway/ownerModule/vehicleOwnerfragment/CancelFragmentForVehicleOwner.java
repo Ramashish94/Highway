@@ -62,7 +62,7 @@ public class CancelFragmentForVehicleOwner extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         //dashBoardActivity = (DashBoardActivity) getActivity();
-       ownerAllTripActivity = (OwnerAllTripActivity) getActivity();
+       ownerAllTripActivity =new OwnerAllTripActivity();
 
 
     }
@@ -82,7 +82,7 @@ public class CancelFragmentForVehicleOwner extends Fragment {
             cancleRecycler.setAdapter(cancleTripAdapterForVehicleOwner);
 
         }else{
-            Toast.makeText(ownerAllTripActivity, "no any trip for cancel", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "no any trip for cancel", Toast.LENGTH_SHORT).show();
         }
     }
 

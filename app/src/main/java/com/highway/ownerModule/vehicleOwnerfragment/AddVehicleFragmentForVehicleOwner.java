@@ -1,5 +1,6 @@
 package com.highway.ownerModule.vehicleOwnerfragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,17 +10,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.highway.R;
 import com.highway.common.base.activity.DashBoardActivity;
 import com.highway.commonretrofit.RestClient;
+import com.highway.ownerModule.vehicleOwnerActivities.AddDriverVehicleOwnerActivity;
 import com.highway.ownerModule.vehileOwnerModelsClass.addVehicle.AddVehicleRequest;
 import com.highway.ownerModule.vehileOwnerModelsClass.addVehicle.AddVehicleResponse;
 import com.highway.ownerModule.vehileOwnerModelsClass.vehiceLoadCapicity.LoadCacpacitySizeDatum;
@@ -40,6 +45,7 @@ import com.highway.utils.HighwayPrefs;
 import com.highway.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,8 +56,9 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
 
     RecyclerView addVehicleRecycView;
     Toolbar addVehicleToolbar;
-    private EditText edtVehicleDescription, edtTxtVehicleNos, edtTxtvehicleModelNos, edtTxtvehicleName,
+    private EditText edtVehicleDescription, edtTxtVehicleNos, edtTxtvehicleName,
             edtTxtVehileLoadCapicity, edtTxtVehicleSize;
+    TextView edtTxtvehicleModelNos;
     private Button btnAddNewVehicle;
     private String vehicleName, vehicleModelNos, vehicleNos, vehicleDescription, user_Id;
     public String vehileLoadCapicity, vehicleSize;
@@ -63,6 +70,7 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
     List<String> vehicleNames;
     List<String> dimensionSize;
     ArrayList<String> loadCapity;
+    private DatePickerDialog datePickerDialog;
     String driverId;
     String vehicleTypeId, vehicleDimensionSizeId , vehicleLoadCapityId;
     DriverDropDownResponse driverDropDownResponse;
@@ -110,6 +118,29 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
         getVehicleDiamensionSizeList();
         getVehicleLoadCapicityList();
         clickListener();
+
+
+        edtTxtvehicleModelNos.setOnClickListener(new View.OnClickListener() {
+            private int mYear, mMonth, mDay;
+
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+                        //dobDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        edtTxtvehicleModelNos.setText((monthOfYear + 1)+"/" +year );
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         return view;
 
@@ -210,7 +241,7 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
         }
 
         if (vehicleModelNos.isEmpty() && edtTxtVehicleNos.length() != 3) {
-            edtTxtvehicleModelNos.setError("pls enter valid model number.. max length 3");
+            edtTxtvehicleModelNos.setError("pls enter valid model");
             check = false;
         } else {
             edtTxtvehicleModelNos.setError(null);
@@ -388,7 +419,7 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
             addVehicleRequest.setVehicleModelNo(vehicleModelNos);
             addVehicleRequest.setVehicleTypeId(vehicleTypeId);
             addVehicleRequest.setVehicleCapacityId(vehicleLoadCapityId);
-            addVehicleRequest.setVehicleDimensionSizeId(vehicleDimensionSizeId);
+            addVehicleRequest.setVehicleDimensionSizeId("");
             addVehicleRequest.setVehicleDescription(vehicleDescription);
             user_Id = HighwayPrefs.getString(getActivity(), Constants.ID);
             addVehicleRequest.setOwnerId(user_Id);
@@ -402,18 +433,20 @@ public class AddVehicleFragmentForVehicleOwner extends Fragment {
                         if (response.body() != null) {
                             if (response.body().getStatus()) {
                                 //if (response.body().getId())
-                                dashBoardFragmentForVehicleOwner = DashBoardFragmentForVehicleOwner.newInstance();
+                               /* dashBoardFragmentForVehicleOwner = DashBoardFragmentForVehicleOwner.newInstance();
                                 Bundle bundle = new Bundle();
                                 dashBoardFragmentForVehicleOwner.setArguments(bundle);
-
-                                getActivity().getSupportFragmentManager().popBackStackImmediate("Frag1", 0);
-
+*/
+                                Toast.makeText(getActivity(), "Vehicle added Successfully", Toast.LENGTH_SHORT).show();
+                                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                              //   ((DashBoardActivity) getActivity()).replaceFragment(dashBoardFragmentForVehicleOwner, " ");
 
                                /* Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();*/
-                                Toast.makeText(getActivity(), "Vehicle added Successfully", Toast.LENGTH_SHORT).show();
+
+                            }else {
+                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

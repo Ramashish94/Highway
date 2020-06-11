@@ -81,6 +81,7 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        getAllVehicle();
         recyclerOperation();
     }
 
@@ -110,6 +111,7 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
 
                             getAllVehicleResponse = response.body();
                             DataVehicle data = getAllVehicleResponse.getData();
+
                             vehicleDetails = data.getVehicleDetails();
 
                             if (vehicleDetails.size() > 0) {
@@ -118,8 +120,12 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
                                     getAllVehicleAdapterForVehicleOwner.notifyDataSetChanged();
                                 }
                             } else {
+
                                 Toast.makeText(getActivity(), "No vehicle details is added! pls add Vehicle details", Toast.LENGTH_SHORT).show();
+
                             }
+                        }else {
+
                         }
                     }
                 }
@@ -169,8 +175,8 @@ public class GetAllVehicleFragmentForVehicleOwner extends Fragment {
                         Utils.dismissProgressDialog();
                         if (response.body() != null) {
                             if (response.body().getStatus()) {
-
-                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                vehicleDetails.clear();
+                              //  Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 getAllVehicle();
                             }else {
 

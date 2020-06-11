@@ -5,15 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddNewDriverRequest {
 
-
-    @SerializedName("stateId")
-    @Expose
-    private String stateId;
-    @SerializedName("cityId")
-    @Expose
-    private String cityId;
-
-
     @SerializedName("owner_id")
     @Expose
     private String ownerId;
@@ -35,9 +26,12 @@ public class AddNewDriverRequest {
     @SerializedName("dlexpiryDate")
     @Expose
     private String dlexpiryDate;
-    @SerializedName("vehicleId")
+    @SerializedName("stateId")
     @Expose
-    private String vehicleId;
+    private String stateId;
+    @SerializedName("cityId")
+    @Expose
+    private String cityId;
 
     public String getOwnerId() {
         return ownerId;
@@ -95,15 +89,6 @@ public class AddNewDriverRequest {
         this.dlexpiryDate = dlexpiryDate;
     }
 
-    public String getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-
     public String getStateId() {
         return stateId;
     }
@@ -119,4 +104,5 @@ public class AddNewDriverRequest {
     public void setCityId(String cityId) {
         this.cityId = cityId;
     }
+
 }

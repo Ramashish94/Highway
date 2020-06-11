@@ -31,12 +31,14 @@ public class RetrofitClient {
                     .readTimeout(120, TimeUnit.SECONDS)
                     .writeTimeout(120, TimeUnit.SECONDS)
                     .addInterceptor(logging)
+                    .retryOnConnectionFailure(true)
                     .build();
         } else {
             return new OkHttpClient().newBuilder()
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(true)
                     .build();
         }
 

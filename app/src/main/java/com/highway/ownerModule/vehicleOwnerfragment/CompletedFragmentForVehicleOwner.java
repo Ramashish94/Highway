@@ -61,7 +61,7 @@ public class CompletedFragmentForVehicleOwner extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
       // dashBoardActivity = (DashBoardActivity) getActivity();
-        ownerAllTripActivity = (OwnerAllTripActivity) getActivity();
+        ownerAllTripActivity = new OwnerAllTripActivity();
 
     }
 
@@ -78,7 +78,7 @@ public class CompletedFragmentForVehicleOwner extends Fragment {
             completedRecycler.setItemAnimator(new DefaultItemAnimator());
             completedRecycler.setAdapter(completedTripAdapterForVehicleOwner);
         }else{
-            Toast.makeText(ownerAllTripActivity, "No any completed trip", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "No any completed trip", Toast.LENGTH_SHORT).show();
         }
     }
 }

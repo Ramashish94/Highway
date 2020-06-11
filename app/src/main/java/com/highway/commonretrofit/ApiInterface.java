@@ -112,7 +112,7 @@ public interface ApiInterface {
     Call<AddVehicleResponse> addVehicleResponseCall(@Body AddVehicleRequest addVehicleRequest);
 
     // Add new Driver
-    @POST("index.php/api/Login/addDriver")
+    @POST("api/Trip/addNewDriver")
     Call<AddNewDriverResponse> addNewDriverResponseCall(@Body AddNewDriverRequest addNewDriverRequest);
 
 

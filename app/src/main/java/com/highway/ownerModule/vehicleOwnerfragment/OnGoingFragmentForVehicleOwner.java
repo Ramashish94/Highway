@@ -64,7 +64,7 @@ public class OnGoingFragmentForVehicleOwner extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
       // dashBoardActivity = (DashBoardActivity) getActivity();
-        ownerAllTripActivity = (OwnerAllTripActivity) getActivity();
+        ownerAllTripActivity = new OwnerAllTripActivity();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class OnGoingFragmentForVehicleOwner extends Fragment {
             vehicleOngoingRecycler.setItemAnimator(new DefaultItemAnimator());
             vehicleOngoingRecycler.setAdapter(onGoingTripAdapterForVehicleOwner);
         }else {
-            Toast.makeText(ownerAllTripActivity, "no any ongoing trip ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "no any ongoing trip ", Toast.LENGTH_SHORT).show();
         }
       }
 

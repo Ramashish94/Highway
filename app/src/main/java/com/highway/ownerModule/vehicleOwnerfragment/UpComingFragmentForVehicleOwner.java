@@ -61,7 +61,7 @@ public class UpComingFragmentForVehicleOwner extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         //dashBoardActivity = (DashBoardActivity) getActivity();
-        ownerAllTripActivity = (OwnerAllTripActivity) getActivity();
+        ownerAllTripActivity = new OwnerAllTripActivity();
 
     }
 
@@ -79,7 +79,7 @@ public class UpComingFragmentForVehicleOwner extends Fragment {
             vehicleUpcomingRecycler.setAdapter(upcomingTripAdapterForVehicleOwner);
 
         }else{
-            Toast.makeText(ownerAllTripActivity, "No upcoming trip ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "No upcoming trip ", Toast.LENGTH_SHORT).show();
         }
     }
 
