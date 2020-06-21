@@ -129,7 +129,9 @@ public class DriverOnlineFragment extends Fragment implements View.OnClickListen
             }
 
         }else {
+
             onlineOfflineButton.setVisibility(View.GONE);
+
         }
     }
 
@@ -302,6 +304,7 @@ public class DriverOnlineFragment extends Fragment implements View.OnClickListen
             }
         });
     }
+
 
 }
 

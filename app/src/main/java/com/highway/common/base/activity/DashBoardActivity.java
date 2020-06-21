@@ -1097,22 +1097,34 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onResponse(Call<DriverDetails> call, Response<DriverDetails> response) {
                 if (response != null && response.code() == 200 && response.body() != null) {
-                    TripStatus tripStatus = response.body().getDriverTripStatus();
-                    Log.d("Driver Details", "" + tripStatus.getCurrentTripStatus());
-                    HighwayApplication.getInstance().setCurrentTripId(tripStatus.getBookingTripId());
-                    HighwayApplication.getInstance().setUserDetails(tripStatus);
-                    if (!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED)) {
 
-                        incomingFragment = IncomingRequestFragmentForDriver.newInstance();
-                        Bundle bundle = new Bundle();
-                        incomingFragment.setArguments(bundle);
-                        replaceFragment(incomingFragment, "Online");
-                    }else if (tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED) || tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE)){
-                        showInvoiceBottomSheetDriver();
-                    }else if(!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING)){
-                        showratingBottomSheetDriver();
 
-                    }
+                   if (response.body().getStatus()) {
+
+                    //   HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, "0");
+
+
+                       TripStatus tripStatus = response.body().getDriverTripStatus();
+                       Log.d("Driver Details", "" + tripStatus.getCurrentTripStatus());
+                       HighwayApplication.getInstance().setCurrentTripId(tripStatus.getBookingTripId());
+                       HighwayApplication.getInstance().setUserDetails(tripStatus);
+                       if (!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE) && !tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED)) {
+
+                           incomingFragment = IncomingRequestFragmentForDriver.newInstance();
+                           Bundle bundle = new Bundle();
+                           incomingFragment.setArguments(bundle);
+                           replaceFragment(incomingFragment, "Online");
+                       } else if (tripStatus.getCurrentTripStatus().equalsIgnoreCase(DROPPED) || tripStatus.getCurrentTripStatus().equalsIgnoreCase(INVOICE)) {
+                           showInvoiceBottomSheetDriver();
+                       } else if (!tripStatus.getCurrentTripStatus().equalsIgnoreCase(RATING)) {
+                           showratingBottomSheetDriver();
+
+                       }
+                   }else {
+                     //  HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, "1");
+
+                       Toast.makeText(DashBoardActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                   }
 
                 }
             }

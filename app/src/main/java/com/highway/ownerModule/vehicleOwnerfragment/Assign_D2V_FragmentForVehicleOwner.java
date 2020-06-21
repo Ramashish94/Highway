@@ -287,6 +287,8 @@ public class Assign_D2V_FragmentForVehicleOwner extends Fragment {
 
                         Toast.makeText(getActivity(), "Assign Driver to  Vehicle   SuccessFully", Toast.LENGTH_SHORT).show();
                         // getActivity().finish();
+                    }else {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -193,22 +193,22 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
                     public void onResponse(Call<VerifyOtpResponse> call, Response<VerifyOtpResponse> response) {
                         Utils.dismissProgressDialog();
                         if (response.body() != null) {
-                            if (TextUtils.isEmpty(response.body().getUser().getName())) {
-                                Intent intent = new Intent(MobileOtpVerificationActivity.this, RegistrationDetailsActivity.class);
+                          //  if (response.body().getStatus()) {
+                                if (TextUtils.isEmpty(response.body().getUser().getName())) {
+                                    Intent intent = new Intent(MobileOtpVerificationActivity.this, RegistrationDetailsActivity.class);
 
-                                userId = response.body().getUser().getUserId();
-                                HighwayPrefs.putString(getApplicationContext(), Constants.ID, userId);
+                                    userId = response.body().getUser().getUserId();
+                                    HighwayPrefs.putString(getApplicationContext(), Constants.ID, userId);
 
-                                Log.e("verifyDriver","::"+response.body().getUser().getDriverVerifyBy());
+                                    Log.e("verifyDriver", "::" + response.body().getUser().getDriverVerifyBy());
 
-                                HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, response.body().getUser().getDriverVerifyBy());
+                                    HighwayPrefs.putString(getApplicationContext(), Constants.driverVerifyBy, response.body().getUser().getDriverVerifyBy());
 
 
-
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                gotoDashboardAfterLogin(response.body());
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    gotoDashboardAfterLogin(response.body());
 
                                /* Intent intent = new Intent(MobileOtpVerificationActivity.this, DashBoardActivity.class);
 
@@ -224,7 +224,10 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
                                 startActivity(intent);
                                 Toast.makeText(MobileOtpVerificationActivity.this, "Wlcm to Highway", Toast.LENGTH_SHORT).show();
                                 finish();*/
-                            }
+                                }
+                           /* }else {
+                                Toast.makeText(MobileOtpVerificationActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }*/
                         } else {
                             Toast.makeText(MobileOtpVerificationActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
 
@@ -272,8 +275,14 @@ public class MobileOtpVerificationActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
+           try {
+
+
             if (smsReceiver != null)
                 unregisterReceiver(smsReceiver);
+           }catch (Exception e){
+               e.printStackTrace();
+           }
             super.onBackPressed();
             return;
         }

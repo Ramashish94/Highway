@@ -51,7 +51,6 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
@@ -139,7 +138,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Places.initialize(mActivity,"AIzaSyDRMI4wJHUfwtsX3zoNqVaTReXyHtIAT6U");
+        Places.initialize(mActivity, "AIzaSyDRMI4wJHUfwtsX3zoNqVaTReXyHtIAT6U");
 
         if (!Places.isInitialized()) {
             Places.initialize(mActivity, "AIzaSyDRMI4wJHUfwtsX3zoNqVaTReXyHtIAT6U");
@@ -149,7 +148,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
             @Override
             public void onClick(View v) {
 
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.ADDRESS, Place.Field.LAT_LNG);
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.FULLSCREEN, fields)
@@ -164,13 +163,13 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
             @Override
             public void onClick(View v) {
 
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.ADDRESS, Place.Field.LAT_LNG);
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
-                    Intent intent = new Autocomplete.IntentBuilder(
-                            AutocompleteActivityMode.FULLSCREEN, fields)
-                            .setCountry("IN")
-                            .setTypeFilter(TypeFilter.ADDRESS)
-                            .build(mActivity);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setCountry("IN")
+                        //.setTypeFilter(TypeFilter.ADDRESS)
+                        .build(mActivity);
 
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE_DEST);
 
@@ -235,8 +234,6 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                 }
 
 
-//// sir es code ka yaha kya mayne h jab utils class m all ready rakha gya h
-
                 double MyLat = latLng.latitude;
                 double MyLong = latLng.longitude;
                 Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -244,18 +241,15 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                     List<Address> addresses = geocoder.getFromLocation(MyLat, MyLong, 1);
                     String stateName = addresses.get(0).getAddressLine(0);
                     String cityName = addresses.get(0).getLocality();
-                    Log.e("stateName","::"+stateName);
+                    Log.e("stateName", "::" + stateName);
 
-                    Log.e("stateName12","::"+     Utils.getAddress(mActivity, latLng));
+                    Log.e("stateName12", "::" + Utils.getAddress(mActivity, latLng));
 
-                  //  edit_profile_city_editText.setText(place.getName() + "," + stateName);
+                    //  edit_profile_city_editText.setText(place.getName() + "," + stateName);
                 } catch (IOException e) {
                     e.printStackTrace();
 
                 }
-//////////////////////////////////////////////////////////////////////////
-
-
 
 
             } else if (requestCode == AUTOCOMPLETE_REQUEST_CODE_DEST) {
@@ -267,7 +261,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
                     if (TextUtils.isEmpty(placeDest.getAddress())) {
                         edtDropLocation.setText("" + placeDest.getName());
                     } else {
-                        edtDropLocation.setText(placeDest.getName() +"" + placeDest.getAddress());
+                        edtDropLocation.setText(placeDest.getName() + "" + placeDest.getAddress());
                     }
                     if (mMap != null && placeDest.getLatLng() != null) {
 
@@ -301,7 +295,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
             HighwayApplication.getInstance().getBookingHTripRequest().setDestLat(destLatitude);
             HighwayApplication.getInstance().getBookingHTripRequest().setDestLong(destLongitude);
             BookingWithDetailsActivity.start(mActivity);
-           // getActivity().finish();  //
+            // getActivity().finish();  //
         }
     }
 
@@ -425,7 +419,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
         Location location1 = new Location("");
         location1.setLatitude(30.5518691);
         location1.setLongitude(75.6513571);
-       // showMarker(location1);
+        // showMarker(location1);
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -544,7 +538,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
 
         double dLon = (long2 - long1);
 
-        double y = Math.sin(dLon) * Math .cos(lat2);
+        double y = Math.sin(dLon) * Math.cos(lat2);
         double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
                 * Math.cos(lat2) * Math.cos(dLon);
 
@@ -588,7 +582,7 @@ public class NewBookingFragment extends Fragment implements OnMapReadyCallback, 
     }
 
     public void getNearByDriverLocation() {
-        RestClient.getNearByDriverLocation( new Callback<NearByDriverLocationResponse>() {
+        RestClient.getNearByDriverLocation(new Callback<NearByDriverLocationResponse>() {
             @Override
             public void onResponse(Call<NearByDriverLocationResponse> call, Response<NearByDriverLocationResponse> response) {
                 Utils.dismissProgressDialog();
